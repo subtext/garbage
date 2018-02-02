@@ -12,5 +12,6 @@ try {
     $app->execute();
 }catch (\Exception $e) {
     // TODO: handle exception
-    echo "THERE WAS AN EXCEPTION";
+    echo "THERE WAS AN EXCEPTION\n";
+    echo $e->getMessage();
 }

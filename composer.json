@@ -11,7 +11,7 @@
     ],
     "autoload": {
     	"psr-4": {
-    		"subtext\\garbage\\": "src/"
+    		"Subtext\\Garbage\\": "src/"
     	}
     },
     "require": {
