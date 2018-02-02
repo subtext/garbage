@@ -35,6 +35,8 @@ class Application
 
     public function execute()
     {
-        echo "hello, alonzo!";
+        $this->controller->execute(
+            $this->model->getRequestForController()
+        );
     }
 }

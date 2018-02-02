@@ -12,4 +12,13 @@ namespace Subtext\Garbage;
 class Controller
 {
 
+    /**
+     * @param string $request
+     */
+    public function execute(string $request)
+    {
+        echo "Bandit is a jerk!\n";
+        echo $request;
+    }
+
 }

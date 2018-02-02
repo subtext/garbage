@@ -38,8 +38,18 @@ class Model
      * @param string $key
      * @return mixed
      */
-    public function getParameter(string $key)
+    public function getParameter(string $key, string $default = '')
     {
-        return $this->request->get($key);
+        return $this->request->get($key, $default);
+    }
+
+    /**
+     * Parse all pertinent request headers for application controller logic
+     *
+     * @return string
+     */
+    public function getRequestForController()
+    {
+        return $this->getParameter('command', 'default');
     }
 }
