@@ -11,5 +11,11 @@ namespace Subtext\Garbage;
 
 class View
 {
+    /**
+     * Render the view
+     */
+    public function display()
+    {
 
+    }
 }

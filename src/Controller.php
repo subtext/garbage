@@ -17,7 +17,7 @@ class Controller
      */
     public function execute(string $request)
     {
-        echo "Bandit is a jerk!\n";
+        echo "Bandit is a good and loving puppy!<br />";
         echo $request;
     }
 
