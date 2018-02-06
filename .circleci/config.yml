@@ -6,32 +6,25 @@ version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
-      - image: alonzoturner/lamp-stack:latest
+      # use php 7.1 as the primary docker images for testing
+      - image: circleci/php:7.1-apache-node-browsers
 
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mysql:9.4
+      # use mysql 5.6 with a tmpfs mount for faster tests
+      - image: circleci/mysql:5.6-ram
 
     working_directory: ~/repo
 
     steps:
       - checkout
 
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "composer.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
+      # install application dependencies with composer
       - run: composer install -n --prefer-dist
 
-      - save_cache:
-          paths:
-            - ./vendor
-          key: v1-dependencies-{{ checksum "composer.json" }}
+      # install mysql-client this is just for ssh into box
+      - run: sudo apt install mysql-client
+
+      # download ngrok
+      - run: wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
 
       # run tests!
       - run: echo $(pwd)
