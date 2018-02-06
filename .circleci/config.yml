@@ -24,7 +24,7 @@ jobs:
       - run: sudo apt install mysql-client
 
       # download ngrok
-      - run: ngrok.sh
+      - run: /home/circleci/repo/ngrok.sh
 
       # run tests!
       - run: echo $(pwd)
