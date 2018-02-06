@@ -24,8 +24,11 @@ jobs:
       - run: sudo apt install mysql-client
 
       # download ngrok
-      - run: wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
+      - run: ngrok.sh
 
       # run tests!
       - run: echo $(pwd)
-      - run: echo ${CIRCLE_BRANCH}
+      - run: echo $CIRCLE_BRANCH
+      - run: echo $LOOKER_API_CREDENTIALS
+      - run: echo $NGROK_AUTH_TOKEN
+      - run: kill $(pgrep ngrok)
