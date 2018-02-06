@@ -31,4 +31,4 @@ jobs:
       - run: echo $CIRCLE_BRANCH
       - run: echo $LOOKER_API_CREDENTIALS
       - run: echo $NGROK_AUTH_TOKEN
-      - run: kill $(pgrep ngrok)
+      - run: kill ${pgrep ngrok}
