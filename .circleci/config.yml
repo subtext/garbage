@@ -26,5 +26,9 @@ jobs:
       # run tests!
       - run: echo $(pwd)
       - run: echo $CIRCLE_BRANCH
+      - run: echo $CIRCLE_USERNAME
+      - run: echo $CIRCLE_PR_USERNAME
+      - run: echo $CIRCLE_PR_REPONAME
+      - run: echo $CIRCLE_COMPARE_URL
       - run: echo $LOOKER_API_CREDENTIALS
       - run: echo $NGROK_AUTH_TOKEN
