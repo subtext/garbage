@@ -23,9 +23,6 @@ jobs:
       # install mysql-client this is just for ssh into box
       - run: sudo apt install mysql-client
 
-      # download ngrok
-      - run: /home/circleci/repo/ngrok.sh
-
       # run tests!
       - run: echo $(pwd)
       - run: echo $CIRCLE_BRANCH
