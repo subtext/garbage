@@ -25,9 +25,3 @@ jobs:
 
       # download ngrok
       - run: /home/circleci/repo/ngrok.sh
-
-      # run tests!
-      - run: echo $(pwd)
-      - run: echo $CIRCLE_BRANCH
-      - run: echo $LOOKER_API_CREDENTIALS
-      - run: echo $NGROK_AUTH_TOKEN
