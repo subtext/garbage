@@ -9,6 +9,7 @@
 namespace Subtext\Garbage;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Translation\Translator;
 
 class Model
 {
@@ -17,9 +18,12 @@ class Model
      */
     private $request;
 
-    public function __construct(Request $request)
+    private $translator;
+
+    public function __construct(Request $request, Translator $translator)
     {
         $this->request = $request;
+        $this->translator = $translator;
     }
 
     /**
