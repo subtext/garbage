@@ -8,17 +8,43 @@
 
 namespace Subtext\Garbage;
 
-
 class Controller
 {
+    /**
+     * @var Model
+     */
+    private $model;
 
     /**
-     * @param string $request
+     * @var View
      */
-    public function execute(string $request)
+    private $view;
+
+    /**
+     * Controller constructor.
+     * @param Model $model
+     * @param View $view
+     */
+    public function __construct(Model $model, View $view)
     {
-        echo "Bandit is a good and loving puppy!<br />";
-        echo $request;
+        $this->model = $model;
+        $this->view = $view;
+    }
+
+    /**
+     * Execute the application controller
+     *
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function execute()
+    {
+        $output = $this->view->display(
+            $this->model->getTemplate(),
+            $this->model->getData()
+        );
+        echo $output;
     }
 
 }

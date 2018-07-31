@@ -23,11 +23,34 @@ class Model
     }
 
     /**
+     * Determine the name of the template to be rendered
+     *
+     * @return string
+     */
+    public function getTemplate(): string
+    {
+        return 'default.twig';
+    }
+
+    /**
+     * Get all data pertinent to the view
+     *
+     * @return array
+     */
+    public function getData(): array
+    {
+        return [
+            'pageTitle' => 'Welcome To My Page',
+            'pageContent' => 'Bandit is a wonderful napping companion.'
+        ];
+    }
+
+    /**
      * Return the http request method
      *
      * @return string
      */
-    public function getMethod()
+    protected function getMethod()
     {
         return $this->request->getMethod();
     }
@@ -38,18 +61,8 @@ class Model
      * @param string $key
      * @return mixed
      */
-    public function getParameter(string $key, string $default = '')
+    protected function getParameter(string $key, string $default = '')
     {
         return $this->request->get($key, $default);
-    }
-
-    /**
-     * Parse all pertinent request headers for application controller logic
-     *
-     * @return string
-     */
-    public function getRequestForController()
-    {
-        return $this->getParameter('command', 'default');
     }
 }

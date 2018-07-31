@@ -12,31 +12,24 @@ namespace Subtext\Garbage;
 class Application
 {
     /**
-     * @var Model
-     */
-    private $model;
-
-    /**
-     * @var View
-     */
-    private $view;
-
-    /**
      * @var Controller
      */
     private $controller;
 
-    public function __construct(Model $model, View $view, Controller $controller)
+    public function __construct(Controller $controller)
     {
-        $this->model = $model;
-        $this->view = $view;
         $this->controller = $controller;
     }
 
+    /**
+     * Execute the controller
+     *
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
     public function execute()
     {
-        $this->controller->execute(
-            $this->model->getRequestForController()
-        );
+        $this->controller->execute();
     }
 }
