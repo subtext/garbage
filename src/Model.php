@@ -41,7 +41,12 @@ class Model
     {
         return [
             'pageTitle' => 'Welcome To My Page',
-            'pageContent' => 'Bandit is a wonderful napping companion.'
+            'pageContent' => 'Bandit is a wonderful napping companion.',
+            'colors' => [
+                'red' => 'Red',
+                'blue' => 'Blue',
+                'green' => 'Green',
+            ],
         ];
     }
 
