@@ -24,20 +24,6 @@ class Model
     {
         $this->request = $request;
         $this->translator = $translator;
-
-        $langs = $this->request->getLanguages();
-        $available = array_intersect($langs, $this->languages);
-        $locale = array_shift($available);
-        $lang = explode('_', $locale)[0];
-        $path = '../i18n/messages.' . $lang . '.yaml';
-
-        // Set the environment locale
-        $this->request->setLocale($locale);
-        $this->translator->setLocale($locale);
-
-        // Load the translations
-        $this->translator->addLoader('yaml', new YamlFileLoader());
-        $this->translator->addResource('yaml', $path, $locale);
     }
 
     /**
@@ -58,14 +44,38 @@ class Model
     public function getData(): array
     {
         return [
-            'pageTitle' => 'Welcome To My Page',
-            'pageContent' => 'Bandit is a wonderful napping companion.',
+            'pageTitle' => 'headline.primary',
+            'pageContent' => 'headline.secondary.',
             'colors' => [
                 'red' => 'Red',
                 'blue' => 'Blue',
                 'green' => 'Green',
             ],
         ];
+    }
+
+    /**
+     * Set default locale from the browser and return Translator
+     *
+     * @return Translator
+     */
+    public function getTranslator(): Translator
+    {
+        $langs = $this->request->getLanguages();
+        $available = array_intersect($langs, $this->languages);
+        $locale = array_shift($available);
+        $lang = explode('_', $locale)[0];
+        $path = '../i18n/messages.' . $lang . '.yaml';
+
+        // Set the environment locale
+        $this->request->setLocale($locale);
+        $this->translator->setLocale($locale);
+
+        // Load the translations
+        $this->translator->addLoader('yaml', new YamlFileLoader());
+        $this->translator->addResource('yaml', $path, $locale);
+
+        return $this->translator;
     }
 
     /**
