@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: subtext
- * Date: 2/1/18
- * Time: 12:52 PM
- */
 
 namespace Subtext\Garbage;
 
