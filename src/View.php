@@ -18,6 +18,8 @@ class View
     public function __construct(\Twig_Environment $twig)
     {
         $this->twig = $twig;
+        $this->twig->addExtension(new \Twig_Extensions_Extension_I18n());
+        $this->twig->addExtension(new \Twig_Extensions_Extension_Intl());
     }
 
     /**
