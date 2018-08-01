@@ -58,13 +58,14 @@ class Model
     public function getData(): array
     {
         return [
-            'pageTitle' => 'Welcome To My Page',
-            'pageContent' => 'Bandit is a wonderful napping companion.',
+            'pageTitle' => $this->translator->trans('headline.primary'),
+            'pageContent' => $this->translator->trans('headline.secondary'),
             'colors' => [
-                'red' => 'Red',
-                'blue' => 'Blue',
-                'green' => 'Green',
+                'red' => $this->translator->trans('color.red'),
+                'blue' => $this->translator->trans('color.blue'),
+                'green' => $this->translator->trans('color.green'),
             ],
+            'locale' => $this->request->getLocale()
         ];
     }
 
