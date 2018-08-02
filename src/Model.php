@@ -47,9 +47,9 @@ class Model
             'pageTitle' => 'headline.primary',
             'pageContent' => 'headline.secondary.',
             'colors' => [
-                'red' => 'Red',
-                'blue' => 'Blue',
-                'green' => 'Green',
+                'red' => 'color.red',
+                'blue' => 'color.blue',
+                'green' => 'color.green',
             ],
         ];
     }
