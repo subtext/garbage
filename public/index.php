@@ -1,9 +1,11 @@
 <?php
 
-require_once(dirname(__DIR__) . "/vendor/autoload.php");
+namespace Subtext\Garbage;
 
 use DI\ContainerBuilder;
-use Subtext\Garbage\Application;
+
+require_once(dirname(__DIR__) . "/vendor/autoload.php");
+
 
 try {
     $builder = new ContainerBuilder();
@@ -13,6 +15,6 @@ try {
     $app->execute();
 }catch (\Exception $e) {
     // TODO: handle exception
-    echo "THERE WAS AN EXCEPTION\n";
+    echo "<h1>THERE WAS AN EXCEPTION</h1>";
     echo $e->getMessage();
 }

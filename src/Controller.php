@@ -34,6 +34,9 @@ class Controller
      */
     public function execute()
     {
+        $this->view->setInternationalization(
+            $this->model->getTranslator()
+        );
         $output = $this->view->display(
             $this->model->getTemplate(),
             $this->model->getData()

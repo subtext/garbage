@@ -2,9 +2,9 @@
 
 namespace Subtext\Garbage;
 
+use Subtext\Garbage\Services\Localization;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Translation\Translator;
-use Symfony\Component\Translation\Loader\YamlFileLoader;
 
 class Model
 {
@@ -13,31 +13,20 @@ class Model
      */
     private $request;
 
-    /**
-     * @var Translator
-     */
+    private $localization;
+
     private $translator;
 
-    private $languages = ['en_US', 'en_GB', 'en', 'es_ES', 'es', 'fr_FR', 'fr'];
 
-    public function __construct(Request $request, Translator $translator)
+    public function __construct(
+        Request $request,
+        Localization $localization,
+        Translator $translator
+    )
     {
         $this->request = $request;
+        $this->localization = $localization;
         $this->translator = $translator;
-
-        $langs = $this->request->getLanguages();
-        $available = array_intersect($langs, $this->languages);
-        $locale = array_shift($available);
-        $lang = explode('_', $locale)[0];
-        $path = '../i18n/messages.' . $lang . '.yaml';
-
-        // Set the environment locale
-        $this->request->setLocale($locale);
-        $this->translator->setLocale($locale);
-
-        // Load the translations
-        $this->translator->addLoader('yaml', new YamlFileLoader());
-        $this->translator->addResource('yaml', $path, $locale);
     }
 
     /**
@@ -58,14 +47,24 @@ class Model
     public function getData(): array
     {
         return [
-            'pageTitle' => 'Welcome To My Page',
-            'pageContent' => 'Bandit is a wonderful napping companion.',
+            'pageTitle' => 'headline.primary',
+            'pageContent' => 'headline.secondary.',
             'colors' => [
-                'red' => 'Red',
-                'blue' => 'Blue',
-                'green' => 'Green',
+                'red' => 'color.red',
+                'blue' => 'color.blue',
+                'green' => 'color.green',
             ],
         ];
+    }
+
+    /**
+     * Set default locale from the browser and return Translator
+     *
+     * @return Translator
+     */
+    public function getTranslator(): Translator
+    {
+        return $this->translator;
     }
 
     /**
