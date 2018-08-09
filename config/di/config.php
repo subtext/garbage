@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\Request;
 return [
     'application.root' => dirname(__DIR__, 2),
     'application.locale' => 'en_US',
+    'application.locales' => ['en_US', 'en_CA', 'es_MX', 'fr_CA'],
+    'application.i18n.dir' => string('{application.root}/i18n'),
+    'application.i18n.ext' => 'yml',
     'templates.root' => 'templates',
     'twig.options' => [
         'debug' => true,
@@ -26,5 +29,15 @@ return [
     ),
     Symfony\Component\Translation\Translator::class => create()->constructor(
         get('application.locale')
+    ),
+    Symfony\Component\Translation\Loader\FileLoader::class => create(
+        Symfony\Component\Translation\Loader\YamlFileLoader::class
+    ),
+    Subtext\Garbage\Services\Localization::class => create()->constructor(
+        get('Symfony\Component\Translation\Translator'),
+        get('Symfony\Component\Translation\Loader\FileLoader'),
+        get('application.locales'),
+        get('application.i18n.dir'),
+        get('application.i18n.ext')
     )
 ];
