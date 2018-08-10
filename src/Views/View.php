@@ -1,6 +1,6 @@
 <?php
 
-namespace Subtext\Garbage;
+namespace Subtext\Garbage\Views;
 
 use Symfony\Component\Translation\Translator;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;

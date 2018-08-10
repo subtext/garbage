@@ -2,6 +2,7 @@
 
 namespace Subtext\Garbage;
 
+use Subtext\Garbage\Controllers\Controller;
 
 class Application
 {

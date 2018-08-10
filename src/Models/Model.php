@@ -1,6 +1,6 @@
 <?php
 
-namespace Subtext\Garbage;
+namespace Subtext\Garbage\Models;
 
 use Subtext\Garbage\Services\Localization;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,8 +13,14 @@ class Model
      */
     private $request;
 
+    /**
+     * @var Localization
+     */
     private $localization;
 
+    /**
+     * @var Translator
+     */
     private $translator;
 
 

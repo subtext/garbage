@@ -1,6 +1,9 @@
 <?php
 
-namespace Subtext\Garbage;
+namespace Subtext\Garbage\Controllers;
+
+use Subtext\Garbage\Models\Model;
+use Subtext\Garbage\Views\View;
 
 class Controller
 {
