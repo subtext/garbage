@@ -5,14 +5,12 @@ namespace Subtext\Garbage\Services;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\Loader\LoaderInterface;
 
-
-
 final class Localization
 {
     /**
      * A regular expression for parsing the Accept-Language header
      */
-    const LANGUAGE_RANGE_PATTERN = '/^([a-z]{1,8}(?:[-_][a-z]{1,8})*)(?:;\s*q=(0(?:\.[0-9]{1,3})?|1(?:\.0{1,3})?))?$/i';
+    private const LOCALE_PATTERN = '/^([a-z]{1,8}(?:[-_][a-z]{1,8})*)(?:;\s*q=(0(?:\.[0-9]{1,3})?|1(?:\.0{1,3})?))?$/i';
 
     /**
      * An ordered array of acceptable locales and languages. The first matching
@@ -227,7 +225,7 @@ final class Localization
         $entries = preg_split('/,\s*/', $value);
         foreach ($entries as $entry) {
             $match = null;
-            $result = preg_match(self::LANGUAGE_RANGE_PATTERN, $entry, $match);
+            $result = preg_match(self::LOCALE_PATTERN, $entry, $match);
             if ($result < 1) {
                 continue;
             }
