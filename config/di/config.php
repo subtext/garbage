@@ -28,7 +28,8 @@ return [
         get('twig.options')
     ),
     Symfony\Component\Translation\Translator::class => create()->constructor(
-        get('application.locale')
+        get('application.locale'),
+        get('Subtext\Garbage\Services\MessageFormatter')
     ),
     Symfony\Component\Translation\Loader\FileLoader::class => create(
         Symfony\Component\Translation\Loader\YamlFileLoader::class
