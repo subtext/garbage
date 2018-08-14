@@ -4,6 +4,7 @@ use function DI\create;
 use function DI\get;
 use function DI\string;
 use function DI\factory;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 return [
@@ -34,11 +35,15 @@ return [
     Symfony\Component\Translation\Loader\FileLoader::class => create(
         Symfony\Component\Translation\Loader\YamlFileLoader::class
     ),
-    Subtext\Garbage\Services\Localization::class => create()->constructor(
-        get('Symfony\Component\Translation\Translator'),
-        get('Symfony\Component\Translation\Loader\FileLoader'),
-        get('application.locales'),
-        get('application.i18n.dir'),
-        get('application.i18n.ext')
-    )
+    Subtext\Garbage\Services\Localization::class => factory(function (ContainerInterface $c) {
+        $service = new Subtext\Garbage\Services\Localization(
+            $c->get('Symfony\Component\Translation\Translator'),
+            $c->get('Symfony\Component\Translation\Loader\FileLoader'),
+            $c->get('application.locales'),
+            $c->get('application.i18n.dir'),
+            $c->get('application.i18n.ext')
+        );
+        $service->configureFromEnvironment();
+        return $service;
+    })
 ];

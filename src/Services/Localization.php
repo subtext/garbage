@@ -89,18 +89,32 @@ final class Localization
         $this->_accepted    = $accepted;
         $this->_resourceDir = $resourceDir;
         $this->_extension   = $extension;
-        $this->setDefaults();
+        $this->_translator->addLoader('default', $this->_loader);
     }
 
     /**
-     * @param string      $key    The string key to be translated
-     * @param array       $args   An optional array of replacements to be used
-     * @param string|null $domain The domain of the key, defaults to messages
-     * @return string
+     * {@inheritdoc}
+     */
+    public function setLocale(string $locale): void
+    {
+        $this->_locale = $locale;
+        $this->_translator->setLocale($this->_locale);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLocale(): string
+    {
+        return $this->_locale;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function translate(
         string $key,
-        array $args = [],
+        array $args    = [],
         string $domain = null
     ): string
     {
@@ -116,10 +130,13 @@ final class Localization
         return $this->_translator->trans($key, $args, $domain);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function plural(
         string $key,
         int $num,
-        array $args = [],
+        array $args    = [],
         string $domain = null
     ): string
     {
@@ -127,9 +144,29 @@ final class Localization
     }
 
     /**
+     * Update critical resource info related to locale. This method must be
+     * called if the locale is updated outside of the DI container
+     *
+     * @param string[] $accepted    An array of locales in order of preference
+     * @param string   $resourceDir The directory from which resource files are loaded
+     * @param string   $extension   The file extension used with resource files
+     */
+    public function setDefaults(
+        array $accepted,
+        string $resourceDir,
+        string $extension
+    ): void
+    {
+        $this->_accepted    = $accepted;
+        $this->_resourceDir = $resourceDir;
+        $this->_extension   = $extension;
+        $this->loadDomain('messages');
+    }
+
+    /**
      * Set default and fallback locale as well as adding default loader
      */
-    private function setDefaults(): void
+    public function configureFromEnvironment(): void
     {
         if (!\file_exists($this->_resourceDir)) {
             throw new \InvalidArgumentException();
@@ -137,7 +174,6 @@ final class Localization
         $this->getLocaleFromBrowser();
         $this->_translator->setLocale($this->_locale);
         $this->_translator->setFallbackLocales([$this->_default]);
-        $this->_translator->addLoader('default', $this->_loader);
         $this->loadDomain('messages');
     }
 
@@ -163,9 +199,9 @@ final class Localization
     private function getResourcePath(string $domain): string
     {
         $path = $this->_resourceDir
-              . "/{$domain}"
-              . ".{$this->_locale}"
-              . ".{$this->_extension}";
+            . "/{$domain}"
+            . ".{$this->_locale}"
+            . ".{$this->_extension}";
         if (!\file_exists($path)) {
             throw new \InvalidArgumentException(
                 "The resource file {$path} does not exist."
@@ -238,17 +274,12 @@ final class Localization
             // An entry may have multiple countries per language
             $parts = explode('-', $match[1]);
             $lang   = array_shift($parts);
-            $parts2 = explode('_', $lang);
-            $lang   = array_shift($parts2);
 
             // An entry may be a language without a country
-            if (empty($parts) && empty($parts2)) {
+            if (empty($parts)) {
                 $languages[$lang] = $quality;
             } else {
                 foreach ($parts as $country) {
-                    $languages[$lang . '_' . strtoupper($country)] = $quality;
-                }
-                foreach ($parts2 as $country) {
                     $languages[$lang . '_' . strtoupper($country)] = $quality;
                 }
             }
