@@ -2,9 +2,11 @@
 
 namespace Subtext\Garbage\Models;
 
-use Subtext\Garbage\Services\Localization;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Translation\Translator;
+use Symfony\Component\Form\Forms;
+use Subtext\Garbage\Services\Localization;
+
 
 class Model
 {
@@ -60,6 +62,7 @@ class Model
                 'blue' => 'color.blue',
                 'green' => 'color.green',
             ],
+            'myForm' => $this->getSampleForm()
         ];
     }
 
@@ -92,5 +95,27 @@ class Model
     protected function getParameter(string $key, string $default = '')
     {
         return $this->request->get($key, $default);
+    }
+
+    protected function getSampleForm()
+    {
+        $factory = Forms::createFormFactoryBuilder()->getFormFactory();
+        $form = $factory->createBuilder()
+                        ->add('name_first', 'text', [ 'label' => 'form.name.first' ])
+                        ->add('name_middle', 'text', [ 'label' => 'form.name.middle' ])
+                        ->add('name_last', 'text', [ 'label' => 'form.name.last' ])
+                        ->add('name_suffix', 'choice', [
+                            'choices' => [
+                                'Jr.' => 'Jr.',
+                                'Sr.' => 'Sr.',
+                                'III' => 'III',
+                                'IV' => 'IV'
+                            ],
+                            [ 'label' => 'form.name.suffix' ]
+                        ])
+                        ->getForm()
+                        ->createView();
+
+        return $form;
     }
 }
