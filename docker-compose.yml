@@ -1,0 +1,40 @@
+version: '3'
+services:
+  www:
+    image: httpd:alpine
+    container_name: apache_container
+    volumes:
+      - ./public:/usr/local/apache2/htdocs
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      public_net:
+        ipv4_address: 192.168.0.11
+  mysql:
+    container_name: mysql_container
+    volumes:
+      - ./docker/db:/var/lib/mysql
+    networks:
+      public_net:
+        ipv4_address: 192.168.0.22
+  php:
+    image: php:7.1-fpm-alpine
+    container_name: php_container
+    volumes:
+      - .:/srv/app
+    depends_on:
+      - apache_container
+      - mysql_container
+    ports:
+      - 9000:9000
+    networks:
+      public_net:
+        ipv4_address: 192.168.0.33
+networks:
+  public_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.0.0/24
