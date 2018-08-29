@@ -5,6 +5,16 @@ namespace Subtext\Garbage\Models;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Form\Forms;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Subtext\Garbage\Services\Localization;
 
 
@@ -101,17 +111,29 @@ class Model
     {
         $factory = Forms::createFormFactoryBuilder()->getFormFactory();
         $form = $factory->createBuilder()
-                        ->add('name_first', 'text', [ 'label' => 'form.name.first' ])
-                        ->add('name_middle', 'text', [ 'label' => 'form.name.middle' ])
-                        ->add('name_last', 'text', [ 'label' => 'form.name.last' ])
-                        ->add('name_suffix', 'choice', [
+                        ->add('name_first', TextType::class, [
+                            'label' => 'form.name.first'
+                        ])
+                        ->add('name_middle', TextType::class, [
+                            'label' => 'form.name.middle'
+                        ])
+                        ->add('name_last', TextType::class, [
+                            'label' => 'form.name.last'
+                        ])
+                        ->add('name_suffix', ChoiceType::class, [
                             'choices' => [
                                 'Jr.' => 'Jr.',
                                 'Sr.' => 'Sr.',
                                 'III' => 'III',
                                 'IV' => 'IV'
                             ],
-                            [ 'label' => 'form.name.suffix' ]
+                            'label' => 'form.name.suffix'
+                        ])
+                        ->add('button_reset', ResetType::class, [
+                            'label' => 'form.reset'
+                        ])
+                        ->add('button_submit', SubmitType::class, [
+                            'label' => 'form.submit'
                         ])
                         ->getForm()
                         ->createView();
